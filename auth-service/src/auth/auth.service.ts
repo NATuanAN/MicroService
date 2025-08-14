@@ -75,6 +75,4 @@ export class AuthService {
       throw new HttpException("Something were wrong in server", HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
-
 } 

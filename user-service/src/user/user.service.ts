@@ -8,7 +8,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(User) private userRepo: Repository<User>){}
-async getUserbyeEmail(email:string)
+async getUserbyEmail(email:string)
   {
     try {
         const temp = await this.userRepo.findOne({ where: { email} });
@@ -24,10 +24,10 @@ async getUserbyeEmail(email:string)
       }
   }
 
-  async getUserbyId(id:string)
+  async getUserbyId(userId:string)
   {
     try {
-        const temp = await this.userRepo.findOne({ where: { userId: id } });
+        const temp = await this.userRepo.findOne({ where: { userId} });
         if (!temp)
           throw new HttpException("The user id is not found", HttpStatus.NOT_FOUND);
         return temp;

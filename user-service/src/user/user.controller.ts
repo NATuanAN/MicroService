@@ -13,7 +13,7 @@ export class UserController {
   async getuserbyid(@Param('id') id :string,@Req() req :any)
   {
     const user = await this.userService.getUserbyId(id);
-    if (req.user.email !== user.email)
+    if (req.user.userId!== user.userId)
       throw new HttpException('Unauthorized', HttpStatus.UNAUTHORIZED);
     return req.user;
   }
