@@ -54,19 +54,20 @@ export class AuthService {
       throw new HttpException("The email is not exist", HttpStatus.NOT_FOUND);
     
     try {
-      if (!bcrypt.compareSync(dto.password,user.password))
+      if (!bcrypt.compare(dto.password,user.password))
       {
         console.log("Password is not correct")
         throw new HttpException("Password is not correct",HttpStatus.UNAUTHORIZED)
       } 
 
       const payload = { sub: user.userId };
-      const accesstoken = this.jwtService.sign(payload);
+      const accessToken = this.jwtService.sign(payload);
 
-      await this.redis.set(`token:${user.userId}`, accesstoken,  3600);
+      const refreshToken = await crypto.randomUUID();
 
+      await this.redis.set(`refresh:${user.userId}:${refreshToken}`,refreshToken,3600*7)
       console.log("Login successful");
-      return { "message": "Login successful",accesstoken: accesstoken};
+      return { "message": "Login successful",accesstoken: accessToken,refreshtoken: refreshToken};
     }
     catch (e) {
       if (e instanceof (HttpException))

@@ -13,16 +13,7 @@ export class AuthController {
     return await this.authService.register(dto);
   }
   @Post('login')
-  async login(@Body() dto: LoginDTO, @Req() req: Request)
-  {
-    return await this.authService.login(dto); 
+  async login(@Body() dto: LoginDTO, @Req() req: Request) {
+    return await this.authService.login(dto);
   }
-
-//   @UseGuards(JwtGuard)
-//   @Get('user/:id')
-//   async getUserbyId(@Param('id') id: string, @Req() req: any) {
-//     if (id !== req.user.id)
-//       throw new HttpException("The user doest have authorized to access this resource",HttpStatus.UNAUTHORIZED)
-//     return await this.authService.getUserbyId(id);
-// }
 }
