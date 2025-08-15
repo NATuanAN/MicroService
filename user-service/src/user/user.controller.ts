@@ -1,7 +1,7 @@
 import { Controller, Get, HttpException, HttpStatus, Param, Req, UseGuards } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserService } from './user.service';
-import { JwtGuard } from '../jwt/jwt-guard'
+import { JwtGuard } from './jwt/jwt-guard'
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller()
