@@ -65,11 +65,12 @@ export class AuthService {
 
       const refreshToken = await crypto.randomUUID();
 
-      await this.redis.set(`refresh:${user.userId}:${refreshToken}`,refreshToken,3600*7)
+      await this.redis.set(`refresh:${user.userId}:${refreshToken}`, refreshToken, 3600 * 7);
+
       console.log("Login successful");
       return { "message": "Login successful",accesstoken: accessToken,refreshtoken: refreshToken};
     }
-    catch (e) {
+    catch (e) {   
       if (e instanceof (HttpException))
         throw e;
       console.log("The error is ", e);

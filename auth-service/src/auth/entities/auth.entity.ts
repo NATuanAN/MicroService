@@ -1,5 +1,5 @@
 import { Entity,Column,PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, Unique } from "typeorm";
-
+import { authRole } from "./role.enum";
 
 @Entity('auths')
 @Unique(["email"])
@@ -15,6 +15,13 @@ export class Auth {
     @Column({type:'uuid'})
     userId: string;
     
+    @Column({
+        type: 'enum',
+        enum: authRole,
+        default:authRole.GUEST
+    })
+    role: authRole;
+
     @CreateDateColumn()
     createdAt: Date;
 
