@@ -60,9 +60,8 @@ export class AuthService {
         throw new HttpException("Password is not correct",HttpStatus.UNAUTHORIZED)
       } 
 
-      const payload = { sub: user.userId };
+      const payload = { sub: user.userId ,role:user.role};
       const accessToken = this.jwtService.sign(payload);
-
       const refreshToken = await crypto.randomUUID();
 
       await this.redis.set(`refresh:${user.userId}:${refreshToken}`, refreshToken, 3600 * 7);

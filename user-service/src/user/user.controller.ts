@@ -9,10 +9,10 @@ export class UserController {
 
   @Get('user/:id')
   @IsOwner()
-  async getuserbyid(@Param('id') id :string,@Req() req :any)
+  async getuserbyid(@Param('id') id :string)
   {
     const user = await this.userService.getUserbyId(id);
-    return req.user;
+    return user;
   }
   @MessagePattern('create_user')
   async createUserreturnId(payload:CreateUserDto)

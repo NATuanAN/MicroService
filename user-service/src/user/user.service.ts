@@ -27,9 +27,11 @@ async getUserbyEmail(email:string)
   async getUserbyId(userId:string)
   {
     try {
-        const temp = await this.userRepo.findOne({ where: { userId} });
-        if (!temp)
-          throw new HttpException("The user id is not found", HttpStatus.NOT_FOUND);
+      const temp = await this.userRepo.findOne({ where: { userId} });
+      if (!temp)
+      {
+        throw new HttpException("The user id is not found", HttpStatus.NOT_FOUND);
+      }
         return temp;
       }
       catch (e) {
