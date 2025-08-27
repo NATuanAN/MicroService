@@ -1,7 +1,7 @@
 import { Module  } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Auth } from './auth/entities/auth.entity';
+import { Auth } from './auth/schema/auth.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 
