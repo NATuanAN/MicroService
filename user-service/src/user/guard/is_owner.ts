@@ -7,6 +7,7 @@ export class RightId implements CanActivate{
         const user = request.user;
         const param = request.params;
         
+        // console.log(user)
         if (user.userId!==param.id && user.role!=='admin')
             throw new HttpException('This user is not allowed', HttpStatus.UNAUTHORIZED);
         return true;

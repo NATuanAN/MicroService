@@ -18,7 +18,6 @@ export class JwtStrategy extends PassportStrategy(Strategy)
     const user = await this.userService.getUserbyId(payload.sub);
     if(user)
       console.log('(In jwt) userId:', user.userId,' with role is ', payload.role);
-    const UserWithRole = { ...user, role: payload.role };
-    return UserWithRole;
+    return { ...user, role: payload.role };
   }
 }
