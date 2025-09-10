@@ -4,6 +4,7 @@ import java.util.HashMap;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
+import product_service.product.dto.ProductDTO;
 import product_service.product.model.ProductModel;
 
 @RestController
@@ -26,7 +27,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductModel> getProductbyId(@PathVariable String productId) {
+    public ResponseEntity<ProductDTO> getProductbyId(@PathVariable String productId) {
         return ResponseEntity.ok(productService.getProductbyId(productId));
     }
 }
