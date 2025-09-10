@@ -1,7 +1,8 @@
 package product_service.product.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,9 +18,10 @@ import lombok.Setter;
 public class ProductModel {
     @Id
     private String id;
-
+    @Indexed(unique = true)
     private String productName;
     private Double productPrice;
+    private String category;
     private String productDescription;
     private Integer productStock;
     private Boolean isActive;

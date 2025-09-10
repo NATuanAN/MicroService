@@ -1,8 +1,15 @@
 spring:
   data:
     mongodb:
-      host: localhost
-      database: productDB
-      port: 27017
+      uri: mongodb://localhost:27017/productDB
+      auto-index-creation: true
+  main:
+    allow-circular-references: true
 server:
   port: 5003
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
