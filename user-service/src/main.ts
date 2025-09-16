@@ -12,7 +12,7 @@ async function bootstrap() {
       queueOptions: { durable: false },
     }
   });
-
+  (await app).startAllMicroservices();
   (await app).listen(5002);
 }
 bootstrap();

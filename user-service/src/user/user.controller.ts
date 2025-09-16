@@ -17,6 +17,7 @@ export class UserController {
   @MessagePattern('create_user')
   async createUserreturnId(payload:CreateUserDto)
   {
+    console.log("there is in user")
     return await this.userService.createUser(payload);
   }
 }

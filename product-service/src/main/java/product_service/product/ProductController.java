@@ -15,14 +15,14 @@ public class ProductController {
 
     @GetMapping("/")
     public String helloString() {
-        return "hello";
+        return "This is product page";
     }
 
     @PostMapping("/add")
     public ResponseEntity<HashMap<String, String>> addProduct(@RequestBody ProductModel productModel) {
         productService.addProduct(productModel);
         HashMap<String, String> res = new HashMap<>();
-        res.put("message", "Product hvae been added");
+        res.put("message", "Product have been added");
         return ResponseEntity.ok(res);
     }
 

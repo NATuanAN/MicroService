@@ -10,6 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { ClientProxy ,Payload} from '@nestjs/microservices';
 import { Cache } from 'cache-manager';
+import { log } from 'console';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,7 @@ export class AuthService {
     @Inject('USER_SERVICE') private readonly userClient: ClientProxy,
     @Inject('CACHE_MANAGER') private readonly redis: Cache) { }
   async register(dto: RegisterDTO) {
+    console.log("This is in register of auth")
     const check_email = await this.authRepo.findOne({ where: { email: dto.email } });
 
     if (check_email) {
@@ -26,9 +28,7 @@ export class AuthService {
     try {
       const payload = { email: dto.email, phone: dto.phone ,username:dto.username};
       const hashedPass = await bcrypt.hash(dto.password, 10);
-
       const userId = await firstValueFrom(this.userClient.send('create_user', payload), { defaultValue: null });
-      
       if (!userId)
         throw new HttpException('Fail in creating a new user', HttpStatus.BAD_REQUEST);
       
@@ -54,7 +54,9 @@ export class AuthService {
       throw new HttpException("The email is not exist", HttpStatus.NOT_FOUND);
     
     try {
-      if (!bcrypt.compare(dto.password,user.password))
+      console.log("there is in auth/login")
+      const isMatch = await bcrypt.compare(dto.password, user.password);
+      if (!isMatch)
       {
         console.log("Password is not correct")
         throw new HttpException("Password is not correct",HttpStatus.UNAUTHORIZED)
