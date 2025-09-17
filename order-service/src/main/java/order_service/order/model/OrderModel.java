@@ -36,7 +36,7 @@ public class OrderModel {
     @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
     @MapKeyColumn(name = "product_id")
     @Column(name = "quantity")
-    private Map<UUID, Integer> items;
+    private Map<String, Integer> items;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;

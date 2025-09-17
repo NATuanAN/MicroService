@@ -25,7 +25,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        auth -> auth.requestMatchers("/orders/**", "/wtf/**").permitAll()
+                        auth -> auth.requestMatchers("/orders/**").permitAll()
                                 .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .build();
@@ -33,7 +33,12 @@ public class SecurityConfig {
 
     @Bean
     JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withSecretKey(
-                new SecretKeySpec(jwtsecret.getBytes(), "HmacSHA256")).build();
+        try {
+            return NimbusJwtDecoder.withSecretKey(
+                    new SecretKeySpec(jwtsecret.getBytes(), "HmacSHA256")).build();
+        } catch (Exception e) {
+            System.out.println(e);
+            throw e;
+        }
     }
 }

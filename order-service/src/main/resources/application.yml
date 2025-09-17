@@ -24,4 +24,4 @@ server:
   port: 5003
 
 jwt:
-  secret: fasdfasdfawf
+  secret: fasdfasdfawf12345678901234567890

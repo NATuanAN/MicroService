@@ -21,4 +21,4 @@ logging:
         security: DEBUG
 
 jwt:
-  secret: fasdfasdfawf
+  secret: fasdfasdfawf12345678901234567890
