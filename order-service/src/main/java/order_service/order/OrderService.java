@@ -1,6 +1,7 @@
 package order_service.order;
 
 import java.util.UUID;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -23,10 +24,34 @@ public class OrderService {
     }
 
     public void CreateOrder(Map<String, Integer> temp, String userId) {
-        OrderModel tempModel = new OrderModel();
-        tempModel.setItems(temp);
-        tempModel.setUserId(userId);
-        orderRepo.save(tempModel);
+        try {
+            if (temp == null || userId.isBlank())
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No temp or userId in the request");
+            OrderModel tempModel = new OrderModel();
+            tempModel.setItems(temp);
+            tempModel.setUserId(userId);
+            orderRepo.save(tempModel);
+            rabbitTemplate.convertAndSend("productExchange", "product.key", temp);
+            System.out.println("The message is sent");
+
+        } catch (Exception e) {
+            System.out.println("The error in order service" + e);
+            throw e;
+        }
     }
 
+    public void test() {
+        try {
+            HashMap<String, String> temp = new HashMap<>();
+            temp.put("1", "hello");
+            temp.put("2", "hello");
+            temp.put("3", "hello");
+            rabbitTemplate.convertAndSend("productExchange", "product.key", "temp");
+            System.out.println("The message is sent");
+        } catch (Exception e) {
+            System.out.println("The error in order service" + e);
+            throw e;
+        }
+
+    }
 }

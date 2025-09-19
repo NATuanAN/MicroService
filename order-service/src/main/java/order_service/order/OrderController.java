@@ -1,9 +1,6 @@
 package order_service.order;
 
-import java.util.Map;
 import java.util.UUID;
-
-import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import lombok.RequiredArgsConstructor;
 import order_service.order.dto.OrderCreate;
 import order_service.order.model.OrderModel;
@@ -40,4 +36,5 @@ public class OrderController {
         String userId = jwt().getClaimAsString("sub");// this is user excecute creating the order
         orderService.CreateOrder(orderDto.getItems(), userId);
     }
+
 }

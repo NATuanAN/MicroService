@@ -1,6 +1,11 @@
 package product_service.product;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +18,6 @@ import product_service.product.model.ProductModel;
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping("/")
-    public String helloString() {
-        return "This is product page";
-    }
-
     @PostMapping("/add")
     public ResponseEntity<HashMap<String, String>> addProduct(@RequestBody ProductModel productModel) {
         productService.addProduct(productModel);
@@ -29,5 +29,10 @@ public class ProductController {
     @GetMapping("/{productId}")
     public ResponseEntity<ProductDTO> getProductbyId(@PathVariable String productId) {
         return ResponseEntity.ok(productService.getProductbyId(productId));
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<ProductDTO>> listofproduct() {
+        return productService.listofproduct();
     }
 }
