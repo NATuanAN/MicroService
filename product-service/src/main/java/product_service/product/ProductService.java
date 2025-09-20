@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import product_service.mapper.ProductMapper;
 import product_service.product.dto.ProductDTO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import product_service.product.repo.ProductRepo;
 import product_service.product.model.ProductModel;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,20 +34,21 @@ public class ProductService {
     }
 
     @RabbitListener(queues = "product-queue")
+    @Transactional
     public void receive(Map<String, Integer> meaString) {
-        for (Map.Entry<String, Integer> entry : meaString.entrySet()) {
-            Optional<ProductModel> productTemp = productRepo.findById(UUID.fromString(entry.getKey()));
-            if (!productTemp.isPresent())
-                continue;
-            ProductModel product = productTemp.get();
-            Integer newStock = product.getProductStock() - entry.getValue();
-            if (newStock <= 0) {
-                productRepo.delete(product);
-                continue;
+        List<UUID> idofProducts = meaString.keySet().stream().map(UUID::fromString).toList();
+        List<ProductModel> listofproduct = productRepo.findAllById(idofProducts);
+
+        for (ProductModel pro : listofproduct) {
+            String tempId = pro.getProduct_id().toString();
+            int newValue = pro.getProductStock() - meaString.get(tempId);
+            if (newValue <= 0)
+                pro.setProductStock(0);
+            else {
+                pro.setProductStock(newValue);
             }
-            product.setProductStock(newStock);
-            productRepo.save(product);
         }
+        productRepo.saveAll(listofproduct);
     }
 
     public ResponseEntity<List<ProductDTO>> listofproduct() {

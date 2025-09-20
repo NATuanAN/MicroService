@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,15 +32,14 @@ public class ProductModel {
     private UUID product_id;
     @NotBlank
     private String productName;
-    @NotBlank
+    @NotNull
     private Double productPrice;
-    @NotBlank
     private String category;
     @NotBlank
     private String productDescription;
     @Min(0)
     private Integer productStock;
-    @NotBlank
+    @NotNull
     private Boolean isActive;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
@@ -51,6 +51,6 @@ public class ProductModel {
 
     @PreUpdate
     protected void updated_at() {
-        this.created_at = LocalDateTime.now();
+        this.updated_at = LocalDateTime.now();
     }
 }
