@@ -34,7 +34,7 @@ public class OrderController {
     @PostMapping("/createorder")
     public void CreateOrder(@RequestBody OrderCreate orderDto) {
         String userId = jwt().getClaimAsString("sub");// this is user excecute creating the order
+        System.out.println("User Id: " + userId);
         orderService.CreateOrder(orderDto.getItems(), userId);
     }
-
 }

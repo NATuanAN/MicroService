@@ -40,7 +40,7 @@ public class RabbitMqConfig {
     }
 
     @Bean
-    Binding biding1(Queue queue, TopicExchange topicExchange) {
+    Binding createOrderBinding(Queue queue, TopicExchange topicExchange) {
         return BindingBuilder.bind(queue).to(topicExchange).with(key);
     }
 

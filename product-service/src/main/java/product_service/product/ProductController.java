@@ -1,11 +1,8 @@
 package product_service.product;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +24,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductDTO> getProductbyId(@PathVariable String productId) {
+    public ResponseEntity<ProductDTO> getProductbyId(@PathVariable UUID productId) {
         return ResponseEntity.ok(productService.getProductbyId(productId));
     }
 

@@ -39,19 +39,4 @@ public class OrderService {
             throw e;
         }
     }
-
-    public void test() {
-        try {
-            HashMap<String, String> temp = new HashMap<>();
-            temp.put("1", "hello");
-            temp.put("2", "hello");
-            temp.put("3", "hello");
-            rabbitTemplate.convertAndSend("productExchange", "product.key", "temp");
-            System.out.println("The message is sent");
-        } catch (Exception e) {
-            System.out.println("The error in order service" + e);
-            throw e;
-        }
-
-    }
 }

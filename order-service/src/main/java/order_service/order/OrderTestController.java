@@ -12,12 +12,4 @@ import lombok.RequiredArgsConstructor;
 public class OrderTestController {
     private final OrderService orderService;
 
-    @GetMapping("/test")
-    public void test() {
-        orderService.test();
-    }
-    // @GetMapping("/hello")
-    // public HashMap<String, Object> getUserIdandRole() {
-    // return orderService.CreateOrder();
-    // }
 }

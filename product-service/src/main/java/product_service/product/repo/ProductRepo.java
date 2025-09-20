@@ -1,10 +1,12 @@
 package product_service.product.repo;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import product_service.product.model.ProductModel;
 
 @Repository
-public interface ProductRepo extends MongoRepository<ProductModel, String> {
+public interface ProductRepo extends JpaRepository<ProductModel, UUID> {
 
 }

@@ -1,9 +1,7 @@
 package product_service.product.dto;
 
 import java.util.UUID;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,8 +15,7 @@ import lombok.Setter;
 @Builder
 public class ProductDTO {
     @Id
-    private String id;
-    @Indexed(unique = true)
+    private UUID product_id;
     private String productName;
     private Double productPrice;
     private String category;
