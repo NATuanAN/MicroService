@@ -12,9 +12,12 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 
 @Configuration
 public class RabbitMqConfig {
-    private static final String queue = "order-queue";
-    private static final String exchange = "orderExchange";
-    private static final String key = "order.key";
+    // private static final String queue = "order-queue";
+    // private static final String exchange = "orderExchange";
+    // private static final String key = "order.key";
+    private static final String queue = "product-queue";
+    private static final String exchange = "productExchange";
+    private static final String key = "product.key";
 
     @Bean
     Jackson2JsonMessageConverter jackson2JsonMessageConverter() {

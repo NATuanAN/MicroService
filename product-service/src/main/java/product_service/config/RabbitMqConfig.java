@@ -13,8 +13,6 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 @Configuration
 public class RabbitMqConfig {
     private static final String queue = "product-queue";
-    private static final String exchange = "productExchange";
-    private static final String key = "product.key";
 
     @Bean
     Jackson2JsonMessageConverter jsonMessageConverter() {
@@ -33,15 +31,4 @@ public class RabbitMqConfig {
     Queue queue() {
         return new Queue(queue, true);
     }
-
-    @Bean
-    TopicExchange exchange() {
-        return new TopicExchange(exchange);
-    }
-
-    @Bean
-    Binding createOrderBinding(Queue queue, TopicExchange topicExchange) {
-        return BindingBuilder.bind(queue).to(topicExchange).with(key);
-    }
-
 }
