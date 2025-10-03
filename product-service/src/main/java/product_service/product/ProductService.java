@@ -38,20 +38,24 @@ public class ProductService {
 
     @RabbitListener(queues = "product_queue")
     @Transactional
-    public void receive(Map<String, Integer> meaString) {
+    public Map<String, Integer> receive(Map<String, Integer> meaString) {
         List<UUID> idofProducts = meaString.keySet().stream().map(UUID::fromString).toList();
         List<ProductModel> listofproduct = productRepo.findAllById(idofProducts);
-
+        Map<String, Integer> responstMap = new HashMap<>();
         for (ProductModel pro : listofproduct) {
             String tempId = pro.getProduct_id().toString();
             int newValue = pro.getProductStock() - meaString.get(tempId);
-            if (newValue <= 0)
-                pro.setProductStock(0);
-            else {
+
+            if (newValue <= 0) {
+                responstMap.put(tempId, pro.getProductStock());
+                listofproduct.remove(pro);
+                continue;
+            } else
                 pro.setProductStock(newValue);
-            }
+
         }
         productRepo.saveAll(listofproduct);
+        return responstMap;
     }
 
     public ResponseEntity<List<ProductDTO>> listofproduct() {
