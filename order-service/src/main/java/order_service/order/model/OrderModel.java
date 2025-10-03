@@ -2,54 +2,34 @@ package order_service.order.model;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.UUID;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapKeyColumn;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.Table;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.*;
 
-@Entity
+@Document(collection = "orders")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "orders")
 @Builder
+
 public class OrderModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID orderId;
-
-    @Column(nullable = false)
+    private String orderId;
     private String userId;
 
-    @ElementCollection
-    @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name = "order_id"))
-    @MapKeyColumn(name = "product_id")
-    @Column(name = "quantity")
+    // @ElementCollection
+    // @CollectionTable(name = "order_items", joinColumns = @JoinColumn(name =
+    // "order_id"))
+
     private Map<String, Integer> items;
 
-    @Column(nullable = false)
+    @CreatedDate
     private LocalDateTime createdAt;
-
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
 }

@@ -10,8 +10,10 @@ import product_service.product.model.ProductModel;
 import java.util.Map;
 import java.util.UUID;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -23,6 +25,7 @@ public class ProductService {
     @Autowired
     private final ProductRepo productRepo;
     private final ProductMapper productMapper;
+    private final RabbitTemplate rabbitTemplate;
 
     public void addProduct(ProductModel newProduct) {
         productRepo.save(newProduct);
@@ -33,7 +36,7 @@ public class ProductService {
                 .orElseThrow(() -> new ProductNotFoundException("Product " + productId + " is not found")));
     }
 
-    @RabbitListener(queues = "product-queue")
+    @RabbitListener(queues = "product_queue")
     @Transactional
     public void receive(Map<String, Integer> meaString) {
         List<UUID> idofProducts = meaString.keySet().stream().map(UUID::fromString).toList();
@@ -57,4 +60,22 @@ public class ProductService {
         temp.stream().forEach(item -> productDTOs.add(productMapper.toDTO(item)));
         return ResponseEntity.ok(productDTOs);
     }
+
+    public String user_queString() {
+        Map<String, Object> nestPayload = new HashMap<>();
+        nestPayload.put("pattern", "test_user");
+        nestPayload.put("data", Map.of("mess", "hello"));
+        rabbitTemplate.convertSendAndReceive("user_queue", nestPayload);
+
+        return "This response is null";
+    }
+
+    // @RabbitListener(queues = "product_queue")
+    // public void test(Map<String, Object> messMap) {
+    // System.out.println("The mess is received");
+    // for (Map.Entry<String, Object> entry : messMap.entrySet()) {
+
+    // }
+    // // return "The mess is received";
+    // }
 }

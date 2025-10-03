@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
 import * as redisStore from 'cache-manager-redis-store'
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports:[
@@ -27,7 +28,18 @@ import * as redisStore from 'cache-manager-redis-store'
       port: 6673,
       ttl: 60,
       max: 100,
-    })
+    }),
+    ClientsModule.register([
+      {
+        name: "PRODUCT-SERVICE",
+        transport: Transport.RMQ,
+        options: {
+          urls: ["amqp://localhost:5672"],
+          queue: "product_queue",
+          queueOptions:{durable:true},
+        }
+      }
+    ]),
   ],
   controllers: [UserController],
   providers: [UserService,JwtStrategy],

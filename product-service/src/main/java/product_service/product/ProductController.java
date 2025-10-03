@@ -32,4 +32,9 @@ public class ProductController {
     public ResponseEntity<List<ProductDTO>> listofproduct() {
         return productService.listofproduct();
     }
+
+    @GetMapping("/test_user")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok(productService.user_queString());
+    }
 }
