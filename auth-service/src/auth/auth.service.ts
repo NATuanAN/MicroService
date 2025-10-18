@@ -10,7 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { ClientProxy ,Payload} from '@nestjs/microservices';
 import { Cache } from 'cache-manager';
-import { log } from 'console';
+
 
 @Injectable()
 export class AuthService {

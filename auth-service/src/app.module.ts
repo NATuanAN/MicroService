@@ -14,11 +14,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       useFactory: (cf: ConfigService) =>
       ({
         type: 'mysql',
-        host: cf.get('DB_HOST'),
-        port: parseInt(cf.getOrThrow('DB_PORT')),
-        username: cf.get('DB_USERNAME'),
-        password: cf.get('DB_PASSWORD'),
-        database: cf.get('DB_NAME'),
+        host: cf.get('MYSQL_HOST'),
+        port: parseInt(cf.getOrThrow('MYSQL_PORT')),
+        username: cf.get('MYSQL_USER'),
+        password: cf.get('MYSQL_PASSWORD'),
+        database: cf.get('MYSQL_DB'),
         entities: [Auth],
         // synchronize: true,
       })
