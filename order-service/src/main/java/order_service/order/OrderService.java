@@ -17,7 +17,7 @@ public class OrderService {
     private final OrderRepo orderRepo;
     private final RabbitTemplate rabbitTemplate;
 
-    public OrderModel getOrderbyId(UUID orderId) {
+    public OrderModel getOrderbyId(String orderId) {
         return orderRepo.findById(orderId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Order does not exist"));
     }

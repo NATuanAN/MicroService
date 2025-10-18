@@ -152,3 +152,6 @@ application.properties
 *.env
 **/application.yml
 **/application.properties
+
+
+.yml
