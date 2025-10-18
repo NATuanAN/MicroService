@@ -9,6 +9,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/wtf")
 @RequiredArgsConstructor
 public class OrderTestController {
-    private final OrderService orderService;
+    // private final OrderService orderService;
 
 }
